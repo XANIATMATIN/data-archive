@@ -1,0 +1,30 @@
+{
+    "name": "matin-utils/data-archive",
+    "description": "a utility for archiving data",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "aghaie",
+            "email": "maryamaghaie2570@gmail.com"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MatinUtils\\DataArchive\\ServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "classmap": [],
+        "files": [
+            "Functions.php"
+        ],
+        "psr-4": {
+            "MatinUtils\\DataArchive\\": "src/"
+        }
+    }
+}
