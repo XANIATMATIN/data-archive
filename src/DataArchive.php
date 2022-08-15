@@ -26,9 +26,7 @@ class DataArchive
         $items = \DB::table($tableName)->where($conditionColumn, '<', $time)->get();
         $items = json_decode(json_encode($items), true);
 
-        if (count($items) < 1) {
-            return $messageHandler('No Items To move.');
-        }
+        $messageHandler(count($items).' Items To move.');
 
         $this->creatTableIfDoesntExist($connection, $tableName, $messageHandler);
 
@@ -36,6 +34,7 @@ class DataArchive
             unset($item['id']);
             return $item;
         }, $items);
+        $messageHandler('Start moveing.');
 
         try {
             foreach (array_chunk($insertables, 50) as $insertable) {
@@ -43,8 +42,10 @@ class DataArchive
             }
         } catch (\Throwable $th) {
             $messageHandler("Error: Unable to move data. " . $th->getMessage());
+            return;
         }
 
+        $messageHandler('Deleting.');
         \DB::table($tableName)->where($conditionColumn, '<', $time)->delete();
 
         $messageHandler(count($insertables) . " items moved from $tableName table");
